@@ -1,0 +1,59 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+    app:useSimpleSUmmaryProvider=true 設定値があれば表示する
+    app:isPreferenceVisible="true" 表示/非表示の設定、下記コードで条件により切り替える
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.preferences, rootKey)
+            if(/*some feature*/) {
+                val signaturePreference: EditTextPreference? = findPreference("signature")
+                signaturePreference?.isVisible = true
+            }
+        }
+-->
+
+    <PreferenceCategory app:title="@string/messages_header">
+        <EditTextPreference
+            app:key="signature"
+            app:title="@string/signature_title"
+            app:isPreferenceVisible="true"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="reply"
+            app:title="@string/reply_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/sync_title" />
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="@string/attachment_summary_off"
+            app:summaryOn="@string/attachment_summary_on"
+            app:title="@string/attachment_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            app:key="activity"
+            app:title="Launch activity">
+            <intent
+                android:targetPackage="com.wheeliechamp"
+                android:targetClass="com.wheeliechamp.webscraping.ExampleActivity"/>
+        </Preference>
+        <Preference
+            app:key="webpage"
+            app:title="View webpage">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.google.com" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
